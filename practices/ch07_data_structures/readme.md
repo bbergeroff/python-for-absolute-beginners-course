@@ -59,6 +59,12 @@ The core idea in this chapter was about dictionaries and data structures in gene
 
 ```python
 # d = create d using core concepts above.
+d = {
+     "Sam": 7,
+     'rolls': ['rock', 'paper', 'scissors'],
+     'done': True
+}
+
 
 print(d["Sam"])          # outputs 7
 print(d['rolls'])        # outputs ['rock', 'paper', 'scissors']
