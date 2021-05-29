@@ -15,7 +15,7 @@ def main ():
 
     # Define base values for gameplay: Who's turn it is, the human players name, the sybols being used to play the game, and set the starting player. 
     active_players_turn = random.randint(0,1)
-    player_1 = input("Please tell me what I should call you.")
+    player_1 = input("Please tell me what I should call you? ")
     players = [player_1, "Computer"]
     player = players[active_players_turn]
     print(f"{player} will start!")
@@ -28,6 +28,7 @@ def main ():
 
         announce_turn(player)
         show_board(board)
+        print()
         if not choose_location(board, symbols):
             print("That isn't an option, try again")
             continue
@@ -36,7 +37,7 @@ def main ():
     
     print(f"Game over!! {player} has won the Game!!!")
     print("The ending board was: ")
-    show_board()
+    show_board(board)
 
 
 def choose_location(board, symbol):
@@ -63,7 +64,7 @@ def choose_location(board, symbol):
 
 
 def announce_turn(player):
-    print("")
+    print()
     print(f"It is {player}'s turn. Here's the board:")
     print()
         
@@ -78,7 +79,39 @@ def show_board(board):
 
 
 def find_winner(board):
-    # TODO: Implement how we check for a winner
+    # Win by rows
+    rows = board
+
+    for row in rows:
+        symbol1 = row[0]
+        if symbol1 and all(symbol1 == cell for cell in row):
+            return True
+        
+
+    # Win by cols
+    cols = []
+    for col_idx in range(0, 3):
+        col = [
+            board[0][col_idx],
+            board[1][col_idx],
+            board[2][col_idx],
+        ]
+        cols.append(col)
+    for col in cols:
+        symbol1 = col[0]
+        if symbol1 and all(symbol1 == cell for cell in col):
+            return True
+
+    # Win by diag
+    diags = [
+        [board[0][0], board[1][1], board[2][2],],
+        [board[0][2], board[1][1], board[2][0],]
+    ]
+    for diag in diags:
+        symbol1 = diag[0]
+        if symbol1 and all(symbol1 == cell for cell in diag):
+            return True
+
     return False
 
 
