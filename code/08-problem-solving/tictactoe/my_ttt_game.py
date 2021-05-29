@@ -79,44 +79,40 @@ def show_board(board):
 
 
 def find_winner(board):
-    # Win by rows
-    rows = board
-
-    for row in rows:
-        symbol1 = row[0]
-        if symbol1 and all(symbol1 == cell for cell in row):
-            return True
+    
+    sequences = get_winning_sequence(board)
         
+    for seq in sequences:
+        symbol1 = seq[0]
+        if symbol1 and all(symbol1 == cell for cell in seq):
+            return True
 
-    # Win by cols
-    cols = []
+    return False
+
+def get_winning_sequence(board):
+    sequences = []
+
+    # Win by Rows
+    rows = board
+    sequences.extend(rows)
+
+    # Win by columns
     for col_idx in range(0, 3):
         col = [
             board[0][col_idx],
             board[1][col_idx],
             board[2][col_idx],
         ]
-        cols.append(col)
-    for col in cols:
-        symbol1 = col[0]
-        if symbol1 and all(symbol1 == cell for cell in col):
-            return True
+        sequences.append(col)
 
-    # Win by diag
+    # Win by diagonals
     diags = [
         [board[0][0], board[1][1], board[2][2],],
         [board[0][2], board[1][1], board[2][0],]
     ]
-    for diag in diags:
-        symbol1 = diag[0]
-        if symbol1 and all(symbol1 == cell for cell in diag):
-            return True
+    sequences.extend(diags)
 
-    return False
-
-
-def make_play():
-    pass
+    return sequences
 
 
 def call_header():
