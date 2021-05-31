@@ -90,8 +90,13 @@ def load_rolls():
 
     filename = 'rolls.json'
 
-    fin = open(filename, 'r', encoding='utf-8')
-    rolls = json.load(fin)
+    # fin = open(filename, 'r', encoding='utf-8')
+    # rolls = json.load(fin)
+    # fin.close()
+
+    with open(filename, 'r', encoding='utf-8') as fin:
+        rolls = json.load(fin)
+
 
     print("Loaded rolls")
 
