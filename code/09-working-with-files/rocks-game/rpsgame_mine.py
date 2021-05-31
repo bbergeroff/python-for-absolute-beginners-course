@@ -1,3 +1,5 @@
+from os import DirEntry
+import os
 import random
 import json
 
@@ -5,7 +7,8 @@ import json
 def main():
     load_rolls()
     show_header()
-    play_game("You", "Computer")
+    player1, player2 = get_players()
+    play_game(player1, player2)
 
 
 def show_header():
@@ -45,7 +48,7 @@ def play_game(player_1, player_2):
 
     overall_winner = find_winner(wins, wins.keys())
     print(f"{overall_winner} wins the game!")
-
+    record_win(overall_winner)
 
 def find_winner(wins, names):
     best_of = 3
@@ -88,18 +91,47 @@ def get_roll(player_name, roll_names):
 def load_rolls():
     global rolls
 
-    filename = 'rolls.json'
-
-    # fin = open(filename, 'r', encoding='utf-8')
-    # rolls = json.load(fin)
-    # fin.close()
-
+    directory = os.path.dirname(__file__)
+    filename = os.path.join(directory, 'rolls.json')
+    
     with open(filename, 'r', encoding='utf-8') as fin:
         rolls = json.load(fin)
+    
+    print("Loaded rolls: " + {list(rolls.key())})
+
+def get_players():
+    p1 = input("Player 1, what is your name? ")
+    p2 = "Computer"
+
+    return p1,p2
 
 
-    print("Loaded rolls")
+def record_win(winner_name):
+    leaders = load_leaders()
 
+    if winner_name in leaders:
+        leaders[winner_name] += 1
+    else:
+        leaders[winner_name] = 1
+
+    directory = os.path.dirname(__file__)
+    filename = os.path.join(directory, 'leaderboards.json')    
+
+    with open(filename, 'w', encoding='utf-8') as fout:
+        json.dump(leaders, fout)
+
+
+def load_leaders():
+    
+    directory = os.path.dirname(__file__)
+    filename = os.path.join(directory, 'leaders.json')
+
+    if not os.path.exists(filename):
+        return {}
+
+    with open(filename, 'r', encoding='utf-8') as fin:
+        return json.load(fin)
+    
 
 if __name__ == '__main__':
     main()
