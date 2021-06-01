@@ -3,7 +3,7 @@ import random
 import datetime
 import json
 import os
-  
+
 # Check for winners
 # End game when complete
 
@@ -54,7 +54,11 @@ def play_game(players, board, symbols, active_players_turn):
     log(msg)
     print("The ending board was: ")
     show_board(board)
+<<<<<<< Updated upstream
     record_win(active_players_turn)
+=======
+    record_win(player)
+>>>>>>> Stashed changes
 
 def get_players():
     p1 = input("Player 1, what is your name? ")
@@ -199,7 +203,10 @@ def record_win(winner_name):
         json.dump(leaders, fout)
 
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 def load_leaders():
     
     directory = os.path.dirname(__file__)
