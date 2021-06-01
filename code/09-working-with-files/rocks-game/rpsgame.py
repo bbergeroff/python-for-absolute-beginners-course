@@ -142,6 +142,7 @@ def load_rolls():
 
 
 def load_leaders():
+    
     directory = os.path.dirname(__file__)
     filename = os.path.join(directory, 'leaderboard.json')
 
